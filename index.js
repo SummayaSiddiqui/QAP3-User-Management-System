@@ -99,7 +99,7 @@ app.get("/landing", (request, response) => {
 });
 
 // Logout route
-app.get("/logout", (request, response) => {
+app.post("/logout", (request, response) => {
   request.session.destroy((err) => {
     if (err) {
       console.error("Error while logging out:", err);
