@@ -1,7 +1,15 @@
 <%- include('partials/header', { title: "Login" }) %>
 <h1>Login</h1>
 <% if (error) { %>
-<p style="color: red"><%= error %></p>
+<p
+  style="
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 20px;
+  ">
+  <%= error %>
+</p>
 <% } %>
 <form action="/login" method="POST">
   <div class="form-input-container">
