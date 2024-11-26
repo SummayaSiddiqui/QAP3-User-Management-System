@@ -98,6 +98,19 @@ app.get("/landing", (request, response) => {
   }
 });
 
+// Logout route
+app.get("/logout", (request, response) => {
+  request.session.destroy((err) => {
+    if (err) {
+      console.error("Error while logging out:", err);
+      return response
+        .status(500)
+        .send("An error occurred while logging out.");
+    }
+    response.redirect("/"); // Redirect to the index/home page
+  });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
