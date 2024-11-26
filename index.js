@@ -50,20 +50,11 @@ app.post("/login", (request, response) => {
   const requestBody = request.body;
   //   console.log(request.body);
   const user = USERS.find((user) => user.email === requestBody.email);
-  if (!user) {
-    console.log("User does not exist");
+  if (!user || !bcrypt.compareSync(requestBody.password, user.password)) {
     return response.render("login", {
-      error: "User with this email does not exist.",
+      error: "Credentials do not match.",
     });
   }
-
-  if (!bcrypt.compareSync(requestBody.password, user.password)) {
-    console.error("Password is incorrect");
-    return response.render("login", {
-      error: "Password does not match.",
-    });
-  }
-
   request.session.user = user;
   console.log("Correct credentials!");
   return response.redirect("/landing");
