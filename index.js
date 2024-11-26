@@ -42,7 +42,7 @@ const USERS = [
 
 // GET /login - Render login form
 app.get("/login", (request, response) => {
-  response.render("login");
+  response.render("login", { error: null });
 });
 
 // POST /login - Allows a user to login
@@ -52,12 +52,16 @@ app.post("/login", (request, response) => {
   const user = USERS.find((user) => user.email === requestBody.email);
   if (!user) {
     console.log("User does not exist");
-    return response.redirect("/");
+    return response.render("login", {
+      error: "User with this email does not exist.",
+    });
   }
 
   if (!bcrypt.compareSync(requestBody.password, user.password)) {
     console.error("Password is incorrect");
-    return response.redirect("/");
+    return response.render("login", {
+      error: "Password does not match.",
+    });
   }
 
   request.session.user = user;
@@ -67,7 +71,7 @@ app.post("/login", (request, response) => {
 
 // GET /signup - Render signup form
 app.get("/signup", (request, response) => {
-  response.render("signup");
+  response.render("signup", { error: null });
 });
 
 // POST /signup - Allows a user to signup
@@ -80,9 +84,9 @@ app.post("/signup", (request, response) => {
   );
   if (existingUser) {
     console.log("user already exists");
-    return response
-      .status(400)
-      .send("User with this email already exists");
+    return response.render("signup", {
+      error: "User with this email already exists.",
+    });
   }
 
   // Hash the password
