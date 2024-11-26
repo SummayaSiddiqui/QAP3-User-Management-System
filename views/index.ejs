@@ -1,15 +1,7 @@
 <%- include('partials/header', { title: "Home" }) %>
 <h1>Authentication Practice</h1>
 <% if (error) { %>
-<div
-  style="
-    color: red;
-    border: 1px solid red;
-    padding: 10px;
-    margin-bottom: 20px;
-  ">
-  <%= error %>
-</div>
+<div class="error"><%= error %></div>
 <% } %>
 
 <span class="index-button-container">
