@@ -60,9 +60,9 @@ app.post("/login", (request, response) => {
     return response.redirect("/");
   }
 
-  request.session.email = requestBody.email;
+  request.session.user = user;
   console.log("Correct credentials!");
-  return response.redirect("/");
+  return response.redirect("/landing");
 });
 
 // GET /signup - Render signup form
@@ -78,11 +78,25 @@ app.get("/", (request, response) => {
   if (request.session.user) {
     return response.redirect("/landing");
   }
-  response.render("index");
+  console.log(request.session);
+  return response.render("index");
 });
 
 // GET /landing - Shows a welcome page for users, shows the names of all users if an admin
-app.get("/landing", (request, response) => {});
+app.get("/landing", (request, response) => {
+  if (!request.session.user) {
+    return response.redirect("/");
+  }
+
+  const user = request.session.user;
+  if (user.role === "admin") {
+    // Show all users for admin
+    return response.render("landing", { user, users: USERS });
+  } else {
+    // Regular user view
+    return response.render("landing", { user });
+  }
+});
 
 // Start server
 app.listen(PORT, () => {
