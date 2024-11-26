@@ -1,1 +1,21 @@
-<h1>Landing page</h1>
+<%- include('partials/header', { title: "Landing" }) %>
+
+<h1>Welcome, <%= user.username %>!</h1>
+<p>Your email: <%= user.email %></p>
+
+<% if (user.role === "admin") { %>
+<h2>All Users:</h2>
+<ul>
+  <% users.forEach((u) => { %>
+  <li>Role: <%= u.role %> (Email: <%= u.email %>)</li>
+  <% }) %>
+</ul>
+<% } else { %>
+<p>You are a regular user. Enjoy your stay!</p>
+<% } %>
+
+<form action="/logout" method="POST">
+  <button type="submit" class="button">Logout</button>
+</form>
+
+<%- include('partials/footer') %>
