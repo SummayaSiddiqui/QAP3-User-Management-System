@@ -114,7 +114,7 @@ app.get("/", (request, response) => {
 app.get("/landing", (request, response) => {
   if (!request.session.user) {
     return response.redirect(
-      "/?error=Credentials required to access this page."
+      "/?error=Credentials required to access landing page."
     );
   }
 
