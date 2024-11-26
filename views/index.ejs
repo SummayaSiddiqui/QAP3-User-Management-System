@@ -1,7 +1,19 @@
 <%- include('partials/header', { title: "Home" }) %>
-    <h1>Authentication Practice</h1>
-    <span class="index-button-container">
-        <button onclick="window.location.href='/login'">Login</button>
-        <button onclick="window.location.href='/signup'">Sign Up</button>
-    </span>
+<h1>Authentication Practice</h1>
+<% if (error) { %>
+<div
+  style="
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 20px;
+  ">
+  <%= error %>
+</div>
+<% } %>
+
+<span class="index-button-container">
+  <button onclick="window.location.href='/login'">Login</button>
+  <button onclick="window.location.href='/signup'">Sign Up</button>
+</span>
 <%- include('partials/footer') %>

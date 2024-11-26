@@ -102,17 +102,20 @@ app.post("/signup", (request, response) => {
 
 // GET / - Render index page or redirect to landing if logged in
 app.get("/", (request, response) => {
+  const errorMessage = request.query.error;
   if (request.session.user) {
     return response.redirect("/landing");
   }
   console.log(request.session);
-  return response.render("index");
+  return response.render("index", { error: errorMessage });
 });
 
 // GET /landing - Shows a welcome page for users, shows the names of all users if an admin
 app.get("/landing", (request, response) => {
   if (!request.session.user) {
-    return response.redirect("/");
+    return response.redirect(
+      "/?error=Credentials required to access this page."
+    );
   }
 
   const user = request.session.user;
